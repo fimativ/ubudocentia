@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UBU-Docentia: dónde me sitúo</title>
+<style>
+:root{
+  --ink:#151a20;--grey:#5b6570;--greyl:#97a1ab;--rule:#c9d2da;--paper:#fff;--panel:#f6f8fa;
+  --blue:#3a4fd8;--teal:#00afaf;--green:#4faa5e;--amber:#d99a1f;--violet:#7c2790;--red:#c0392b;
+  --rainbow:linear-gradient(90deg,#7c2790,#4b3ada,#4766f2,#2e86ea,#1fa9da,#00afaf,#3bc09f,#5ecc7a,#9dca40,#dcb935,#ffba4b,#f8d82f,#efec21);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8ecf0;--grey:#aab4be;--greyl:#6b7580;--rule:#2d3640;--paper:#12161b;--panel:#1a2027}}
+:root[data-theme="dark"]{--ink:#e8ecf0;--grey:#aab4be;--greyl:#6b7580;--rule:#2d3640;--paper:#12161b;--panel:#1a2027}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.35 Arial,Helvetica,sans-serif}
+header{padding:18px 16px 6px;max-width:1100px;margin:0 auto}
+h1{font-size:20px;margin:0 0 2px;font-weight:700}
+h1 small{font-weight:400;color:var(--grey);font-size:13px;margin-left:8px}
+main{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+.gauge{position:relative;height:22px;border-radius:11px;background:var(--rainbow);margin:14px 0 26px;opacity:.95}
+.gauge .mark{position:absolute;top:-7px;width:4px;height:36px;background:var(--ink);border-radius:2px;left:0;transition:left .25s}
+.gauge .mark::after{content:attr(data-v);position:absolute;top:38px;left:50%;transform:translateX(-50%);font-weight:700;white-space:nowrap}
+.gauge .band{position:absolute;top:26px;font-size:11px;color:var(--grey);transform:translateX(-50%)}
+.gauge .tick{position:absolute;top:0;width:1px;height:22px;background:rgba(0,0,0,.35)}
+.grade{display:flex;gap:10px;align-items:baseline;margin:34px 0 10px}
+.grade b{font-size:46px;line-height:1}
+.grade span{color:var(--grey)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:820px){.cols{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
+.card h2{font-size:14px;margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.card h2 em{font-style:normal;color:var(--grey);font-weight:400;font-size:12px}
+.bar{position:relative;height:10px;border-radius:5px;background:var(--rule);margin:6px 0 10px;overflow:visible}
+.bar i{display:block;height:100%;border-radius:5px;background:var(--blue);width:0;transition:width .25s}
+.bar s{position:absolute;top:-4px;width:2px;height:18px;background:var(--red);text-decoration:none}
+.bar.teal i{background:var(--teal)}.bar.green i{background:var(--green)}.bar.amber i{background:var(--amber)}.bar.violet i{background:var(--violet)}
+details{border-top:1px solid var(--rule);padding:6px 0}
+summary{cursor:pointer;display:flex;justify-content:space-between;font-weight:700;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary em{font-style:normal;font-weight:400;color:var(--grey);font-size:12px}
+.row{display:grid;grid-template-columns:1fr 64px 46px;gap:6px;align-items:center;padding:3px 0;font-size:12.5px}
+.row label{color:var(--ink)}
+.row small{color:var(--greyl)}
+.row input{width:64px;padding:3px 4px;border:1px solid var(--rule);border-radius:5px;background:var(--paper);color:var(--ink);font:inherit;text-align:right}
+.row output{text-align:right;color:var(--grey);font-variant-numeric:tabular-nums}
+.single{display:grid;grid-template-columns:1fr 90px;gap:8px;align-items:center;margin:8px 0}
+.single input[type=range]{width:100%}
+.single input[type=number]{width:90px;padding:4px;border:1px solid var(--rule);border-radius:5px;background:var(--paper);color:var(--ink);font:inherit;text-align:right}
+.big{font-size:28px;font-weight:700;text-align:right}
+.note{font-size:11.5px;color:var(--grey);margin-top:8px}
+footer{font-size:11px;color:var(--greyl);margin-top:18px;display:flex;gap:14px;flex-wrap:wrap}
+button{font:inherit;padding:4px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer}
+.warn{color:var(--red);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+<h1>UBU-Docentia<small>HERRAMIENTA NO OFICIAL · versión 2.3 · usar bajo propia responsabilidad · manual v4.07</small></h1>
+</header>
+<main>
+<div class="gauge" id="gauge">
+  <span class="tick" style="left:50%"></span><span class="tick" style="left:65%"></span><span class="tick" style="left:85%"></span>
+  <span class="band" style="left:25%">D</span><span class="band" style="left:57.5%">C</span><span class="band" style="left:75%">B</span><span class="band" style="left:92.5%">A</span>
+  <div class="mark" id="mark" data-v="0"></div>
+</div>
+<div class="grade"><b id="grade">–</b><span id="gradetxt"></span></div>
+
+<div class="cols">
+<section class="card">
+  <h2>Actividad docente <em id="actsum">0 / 45 → 0 / 35</em></h2>
+  <div class="bar"><i id="actbar"></i><s style="left:26.7%" title="umbral 12"></s></div>
+
+  <details open><summary>Eje 1 · Coordinación y planificación <em id="e1">0 / 10</em></summary>
+    <div class="bar teal"><i id="e1bar"></i></div>
+    <div data-block="b11" data-max="8"></div>
+    <div class="row"><label>1.1 Comisión de título <small>años</small></label><input data-k="1.1" data-p="1.25" data-b="b11"><output></output></div>
+    <div class="row"><label>1.2 Comisiones docentes <small>años</small></label><input data-k="1.2" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.3 Plan de estudios / verificación <small>años</small></label><input data-k="1.3" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.4 Comisiones SGIC <small>años</small></label><input data-k="1.4" data-p="0.5" data-b="b11"><output></output></div>
+    <div class="row"><label>1.5 Coordinación de curso <small>años</small></label><input data-k="1.5" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.6 Coordinación de asignatura <small>años</small></label><input data-k="1.6" data-p="0.3" data-b="b11"><output></output></div>
+    <div class="row"><label>1.7 Coordinación PAT / Mentor <small>años</small></label><input data-k="1.7" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.8 Dirección de área <small>años</small></label><input data-k="1.8" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.9 Comisiones de selección <small>años</small></label><input data-k="1.9" data-p="1" data-b="b11"><output></output></div>
+    <div class="row"><label>1.10 Coordinación de movilidad <small>años (sin / con estudiantes)</small></label><input data-k="1.10" data-p="1" data-b="b12"><output></output></div>
+    <div class="row"><label>1.11 Coordinación ERASMUS / SICUE <small>años</small></label><input data-k="1.11" data-p="1" data-b="b12"><output></output></div>
+    <div class="row"><label>1.12 Misiones docentes <small>n.º</small></label><input data-k="1.12" data-p="0.25" data-b="b12"><output></output></div>
+    <div class="row"><label>1.13 Otras comisiones y representación <small>puntos</small></label><input data-k="1.13" data-p="1" data-b="b13"><output></output></div>
+  </details>
+
+  <details><summary>Eje 2 · Desarrollo de la docencia <em id="e2">0 / 20</em></summary>
+    <div class="bar green"><i id="e2bar"></i></div>
+    <div class="row"><label>2.1 Docencia impartida sobre referencia <small>6–12 puntos</small></label><input data-k="2.1" data-p="1" data-b="b21"><output></output></div>
+    <div class="row"><label>2.2 Variedad / primer curso <small>años</small></label><input data-k="2.2" data-p="1" data-b="b21" data-cap="5"><output></output></div>
+    <div class="row"><label>2.3 Planes a extinguir <small>puntos</small></label><input data-k="2.3" data-p="1" data-b="b21"><output></output></div>
+    <div class="row"><label>2.4 Estudiantes atendidos <small>0–4 puntos</small></label><input data-k="2.4" data-p="1" data-b="b21" data-cap="4"><output></output></div>
+    <div class="row"><label>2.5 PAT <small>años</small></label><input data-k="2.5" data-p="0.6" data-b="b22"><output></output></div>
+    <div class="row"><label>2.6 Programa Mentor <small>años</small></label><input data-k="2.6" data-p="0.6" data-b="b22"><output></output></div>
+    <div class="row"><label>2.7 Uso de UBUVirtual <small>0–6 puntos</small></label><input data-k="2.7" data-p="1" data-b="b23" data-cap="6"><output></output></div>
+    <div class="row"><label>2.8 Visitas, talleres, seminarios <small>n.º</small></label><input data-k="2.8" data-p="0.5" data-b="b23"><output></output></div>
+    <div class="row"><label>2.9 Tribunales TFG/TFM/tesis <small>n.º</small></label><input data-k="2.9" data-p="2" data-b="b23"><output></output></div>
+    <div class="row"><label>2.10 Dirección de TFG/TFM <small>n.º</small></label><input data-k="2.10" data-p="0.5" data-b="b23"><output></output></div>
+    <div class="row"><label>2.10b Dirección de tesis <small>n.º</small></label><input data-k="2.10b" data-p="1" data-b="b23"><output></output></div>
+    <div class="row"><label>2.11 TFG/TFM en repositorio <small>n.º</small></label><input data-k="2.11" data-p="0.5" data-b="b23"><output></output></div>
+    <div class="row"><label>2.12 Otras actividades <small>puntos</small></label><input data-k="2.12" data-p="1" data-b="b24"><output></output></div>
+  </details>
+
+  <details><summary>Eje 3 · Actividades complementarias <em id="e3">0 / 15</em></summary>
+    <div class="bar amber"><i id="e3bar"></i></div>
+    <div class="row"><label>2.13 Jornadas de puertas abiertas <small>años</small></label><input data-k="2.13" data-p="1" data-b="b31"><output></output></div>
+    <div class="row"><label>2.14 Olimpiadas <small>n.º</small></label><input data-k="2.14" data-p="0.75" data-b="b31"><output></output></div>
+    <div class="row"><label>2.15–2.17 Secundaria: tutela, talleres, jornadas <small>n.º</small></label><input data-k="2.15" data-p="1" data-b="b31"><output></output></div>
+    <div class="row"><label>2.18 Semana de la Ciencia <small>años</small></label><input data-k="2.18" data-p="1" data-b="b31"><output></output></div>
+    <div class="row"><label>2.19 Cursos cero <small>n.º</small></label><input data-k="2.19" data-p="1.5" data-b="b31"><output></output></div>
+    <div class="row"><label>2.20–2.21 Formación recibida <small>horas</small></label><input data-k="2.20" data-p="0.08" data-b="b32" data-cap="6"><output></output></div>
+    <div class="row"><label>2.22–2.23 Cursos impartidos <small>n.º</small></label><input data-k="2.22" data-p="2" data-b="b32"><output></output></div>
+    <div class="row"><label>2.24–2.26 Congresos, jornadas de innovación <small>n.º</small></label><input data-k="2.24" data-p="0.75" data-b="b32"><output></output></div>
+    <div class="row"><label>2.27 Tesis en curso <small>años</small></label><input data-k="2.27" data-p="0.5" data-b="b32" data-cap="1.5"><output></output></div>
+    <div class="row"><label>2.28 Tesis defendida <small>0–2</small></label><input data-k="2.28" data-p="1" data-b="b32" data-cap="2"><output></output></div>
+    <div class="row"><label>3.1–3.2 Libros o manuales <small>puntos</small></label><input data-k="3.1" data-p="1" data-b="b33" data-cap="10"><output></output></div>
+    <div class="row"><label>3.3–3.4 Capítulos <small>puntos</small></label><input data-k="3.3" data-p="1" data-b="b33" data-cap="4"><output></output></div>
+    <div class="row"><label>3.5–3.6 Artículos docentes <small>n.º</small></label><input data-k="3.5" data-p="2" data-b="b33"><output></output></div>
+    <div class="row"><label>3.7 Dirección de proyecto de innovación UBU <small>años</small></label><input data-k="3.7" data-p="1.5" data-b="b33"><output></output></div>
+    <div class="row"><label>3.8 Participación en proyecto UBU <small>años</small></label><input data-k="3.8" data-p="0.75" data-b="b33"><output></output></div>
+    <div class="row"><label>3.9 Dirección de proyecto externo <small>años</small></label><input data-k="3.9" data-p="2" data-b="b33"><output></output></div>
+    <div class="row"><label>3.10 Participación en proyecto externo <small>años</small></label><input data-k="3.10" data-p="1" data-b="b33"><output></output></div>
+    <div class="row"><label>3.11–3.12 Materiales abiertos <small>puntos</small></label><input data-k="3.11" data-p="1" data-b="b33" data-cap="10"><output></output></div>
+    <div class="row"><label>3.13 Otros materiales <small>puntos</small></label><input data-k="3.13" data-p="1" data-b="b34"><output></output></div>
+  </details>
+  <p class="note">Topes por bloque: comisiones 8, movilidad 6, otras 3; docencia 16, atención 6, recursos 8, otras 3; transición 6, formación 10, innovación 10, otras 3. Umbral del elemento: 12 de 45.</p>
+</section>
+
+<section class="card">
+  <h2>Reflexión sobre la práctica <em id="refsum">0 / 10 → 0 / 30</em></h2>
+  <div class="bar violet"><i id="refbar"></i><s style="left:100%" title="umbral 10"></s></div>
+  <div class="single"><input type="range" min="0" max="10" step="0.5" value="0" id="ref"><div class="big" id="refv">0</div></div>
+  <p class="note">Autoestimación de 0 a 10 de los elementos descriptivos y valorativos del informe (seis para profesorado novel). El umbral exige el informe completo: con menos de 10 no se supera.</p>
+  <details><summary>Elementos del informe (novel) <em>guía</em></summary>
+    <div class="row"><label>Encargo docente y asignaturas</label><span></span><span></span></div>
+    <div class="row"><label>Materiales y recursos</label><span></span><span></span></div>
+    <div class="row"><label>Desarrollo profesional y formación</label><span></span><span></span></div>
+    <div class="row"><label>Satisfacción del estudiantado</label><span></span><span></span></div>
+    <div class="row"><label>Evaluación y retroalimentación</label><span></span><span></span></div>
+    <div class="row"><label>Innovación y reconocimiento</label><span></span><span></span></div>
+  </details>
+</section>
+
+<section class="card">
+  <h2>Satisfacción del estudiantado <em id="mpvsum">MPVE 12 / 35</em></h2>
+  <div class="bar"><i id="mpvbar"></i><s style="left:0%" title="umbral 12"></s></div>
+  <div class="single"><input type="range" min="12" max="35" step="0.1" value="12" id="mpv"><div class="big" id="mpvv">12.0</div></div>
+  <details><summary>Estimar MPVE desde la encuesta <em>media 1–5</em></summary>
+    <div class="row"><label>Media de los ítems 2–9 y 11 <small>1–5</small></label><input id="mean" step="0.01" min="1" max="5"><output></output></div>
+    <div class="row"><label>Asignaturas distintas <small>θ: ≤4 → 1; 5–10 → 1.01; ≥11 → 1.02</small></label><input id="nsub" step="1" min="0"><output></output></div>
+    <div class="row"><label>Tercil de créditos <small>δ: 1 / 1.015 / 1.030</small></label><input id="ter" step="1" min="1" max="3" value="1"><output></output></div>
+    <p class="note">Estimación: MPVE ≈ 1.10 · θ · δ · (suma de 9 ítems), tope 35. I am afraid I am not sure about la fórmula exacta de agregación del manual; use el valor oficial cuando lo tenga.</p>
+    <button id="useest">Usar estimación</button>
+  </details>
+  <p class="note">Orientación de bandas: B suele requerir MPVE 24–28; A, por encima de la media de la universidad y del departamento.</p>
+</section>
+</div>
+
+<footer>
+  <span>Copia local de ubudocentia.streamlit.app. No se envía ninguna información a ningún servidor; los datos quedan en este navegador. Licencia MIT · © 2026 Sinuhé Perea Puente.</span>
+  <span>Global ≈ actividad × 35/45 + reflexión × 3 + MPVE. Bandas orientativas: D &lt; 50, C 50–65, B 65–85, A ≥ 85 (el manual no fija el umbral de A).</span>
+  <button id="reset">Borrar</button>
+  <button id="save">Descargar JSON</button>
+  <label><input type="file" id="load" accept="application/json" hidden><button type="button" onclick="document.getElementById('load').click()">Cargar JSON</button></label>
+</footer>
+</main>
+<script>
+const CAP={b11:8,b12:6,b13:3,b21:16,b22:6,b23:8,b24:3,b31:6,b32:10,b33:10,b34:3};
+const AX={e1:["b11","b12","b13"],e2:["b21","b22","b23","b24"],e3:["b31","b32","b33","b34"]};
+const AXMAX={e1:10,e2:20,e3:15};
+const inputs=[...document.querySelectorAll('input[data-k]')];
+const $=id=>document.getElementById(id);
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+function store(){try{const o={};inputs.forEach(i=>o[i.dataset.k]=i.value);o.ref=$('ref').value;o.mpv=$('mpv').value;localStorage.setItem('docentia',JSON.stringify(o))}catch(e){}}
+function restore(o){inputs.forEach(i=>{if(o[i.dataset.k]!=null)i.value=o[i.dataset.k]});if(o.ref!=null)$('ref').value=o.ref;if(o.mpv!=null)$('mpv').value=o.mpv}
+function calc(){
+  const blk={};
+  inputs.forEach(i=>{let v=(parseFloat(i.value)||0)*parseFloat(i.dataset.p);if(i.dataset.cap)v=Math.min(v,parseFloat(i.dataset.cap));i.nextElementSibling.value=v?v.toFixed(2):'';blk[i.dataset.b]=(blk[i.dataset.b]||0)+v});
+  let act=0;
+  for(const ax in AX){let s=0;AX[ax].forEach(b=>s+=Math.min(blk[b]||0,CAP[b]));s=Math.min(s,AXMAX[ax]);act+=s;$(ax).textContent=`${s.toFixed(1)} / ${AXMAX[ax]}`;$(ax+'bar').style.width=(100*s/AXMAX[ax])+'%'}
+  const actW=act*35/45;
+  $('actsum').textContent=`${act.toFixed(1)} / 45 → ${actW.toFixed(1)} / 35`;$('actbar').style.width=(100*act/45)+'%';
+  const ref=parseFloat($('ref').value);$('refv').textContent=ref;$('refsum').textContent=`${ref} / 10 → ${(ref*3).toFixed(0)} / 30`;$('refbar').style.width=(10*ref)+'%';
+  const mpv=parseFloat($('mpv').value);$('mpvv').textContent=mpv.toFixed(1);$('mpvsum').textContent=`MPVE ${mpv.toFixed(1)} / 35`;$('mpvbar').style.width=(100*(mpv-12)/23)+'%';
+  const total=actW+ref*3+mpv;
+  const ok=act>=12&&ref>=10&&mpv>=12;
+  let g,t;
+  if(!ok){g='D';t='umbral no superado: '+[act<12?'actividad':'',ref<10?'reflexión':'',mpv<12?'MPVE':''].filter(Boolean).join(', ')}
+  else if(total<50){g='D';t='deficiente'}else if(total<65){g='C';t='correcto'}else if(total<85){g='B';t='destacado'}else{g='A';t='excelente (orientativo)'}
+  $('grade').textContent=g;$('gradetxt').textContent=`${total.toFixed(1)} / 100 · ${t}`;$('gradetxt').className=ok?'':'warn';
+  $('mark').style.left=`calc(${clamp(total,0,100)}% - 2px)`;$('mark').dataset.v=total.toFixed(0);
+  store();
+}
+document.addEventListener('input',calc);
+$('useest').onclick=()=>{const m=parseFloat($('mean').value)||0,n=parseInt($('nsub').value)||0,t=parseInt($('ter').value)||1;
+  const th=n<=4?1:n<=10?1.01:1.02,de=[1,1.015,1.03][t-1]||1;$('mpv').value=clamp(1.10*th*de*9*m,12,35).toFixed(1);calc()};
+$('reset').onclick=()=>{inputs.forEach(i=>i.value='');$('ref').value=0;$('mpv').value=12;calc()};
+$('save').onclick=()=>{const o={};inputs.forEach(i=>o[i.dataset.k]=i.value);o.ref=$('ref').value;o.mpv=$('mpv').value;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}));a.download='docentia.json';a.click()};
+$('load').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{restore(JSON.parse(t));calc()}catch(err){}})};
+try{const o=JSON.parse(localStorage.getItem('docentia')||'{}');restore(o)}catch(e){}
+calc();
+</script>
+</body>
+</html>
